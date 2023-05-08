@@ -11,7 +11,8 @@ img {
 }
 .contact-list{
     align-content: center;
-    margin-left: 50px;
+    margin-right: -40px;
+    margin-left: 20px;;
 }
 /*.heading {
     margin: 0 auto;
