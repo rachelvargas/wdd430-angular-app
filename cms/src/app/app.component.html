@@ -1,5 +1,13 @@
-<cms-header></cms-header><br>
-<div class="container">
+<cms-header (selectedFeatureEvent)="switchView($event)"></cms-header><br>
+<div class="container pull-left">
+  <cms-documents *ngIf="selectedFeature === 'documents'"></cms-documents>
+  <cms-message-list *ngIf="selectedFeature === 'messages'"></cms-message-list>
+  <cms-contacts *ngIf="selectedFeature === 'contacts'"></cms-contacts>
+
+  <!--<cms-documents *ngIf="selectedFeature === 'documents'"></cms-documents>
+    <cms-message-list *ngIf="selectedFeature === 'messages'"></cms-message-list>
+  <cms-contacts *ngIf="selectedFeature === 'contacts'"></cms-contacts>
+  <cms-contact-list *ngIf="selectedFeature === 'contacts'"></cms-contact-list>-->
   <div class="row">
   </div>
 </div>

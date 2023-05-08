@@ -1,10 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Contact } from './contact.model';
 
 @Component({
-  selector: 'cms-header',
+  selector: 'cms-contacts',
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css']
 })
-export class ContactsComponent {
+export class ContactsComponent implements OnInit{
+  //@Output() selectedFeatureEvent = new EventEmitter<string>();
+  selectedContact: Contact;
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+  /*onSelected(feature:string){
+    this.selectedFeatureEvent.emit(feature);
+  }*/
+
 
 }
