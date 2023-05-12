@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Document } from '../document.model';
 
@@ -10,10 +10,14 @@ import { Document } from '../document.model';
 export class DocumentDetailComponent implements OnInit{
   @Input() document: Document;
 
-  constructor() { }
+  constructor(){ }
 
-  ngOnInit() {
+
+  ngOnInit(){
+
     
   }
+
+  
 
 }
