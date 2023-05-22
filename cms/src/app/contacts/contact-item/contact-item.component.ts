@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Contact } from 'src/app/contacts/contact.model'; //src/app/contacts/contact.model
- 
+import { Component, OnInit, Input } from '@angular/core';
+import { Contact } from '../contact.model'; //src/app/contacts/contact.model
+import { ContactService } from '../contact.service';
+
 @Component({
   selector: 'cms-contact-item',
   templateUrl: './contact-item.component.html',
@@ -8,13 +9,14 @@ import { Contact } from 'src/app/contacts/contact.model'; //src/app/contacts/con
 })
 export class ContactItemComponent implements OnInit {
   @Input() contact: Contact;
-  //@Output() contactSelected = new EventEmitter<void>();
-  //@Input() contact: Contact = new Contact('1', 'R. Kent Jackson', 'jacson@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', null)
-   
 
-  constructor() { }
+  constructor(private contactService: ContactService) { }
 
   ngOnInit() {
+  }
+
+  onSelected(contact: Contact) {
+    this.contactService.contactSelectedEvent.emit(this.contact);
   }
 
 }
