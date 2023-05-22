@@ -1,4 +1,4 @@
-export class MessageModel {
+export class Message {
     constructor (
         public id: string,
         public subject: string,
