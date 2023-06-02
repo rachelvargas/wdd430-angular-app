@@ -1,5 +1,5 @@
 img {
-    max-height: 80px;
+    max-height: 8px;
 }
 
 /*selectors */
@@ -11,8 +11,8 @@ img {
 }
 .contact-list{
     align-content: center;
-    margin-right: -40px;
-    margin-left: 20px;;
+    margin-right: -9px;
+    margin-left: 2px;;
 }
 /*.heading {
     margin: 0 auto;

@@ -9,8 +9,7 @@ import { Document } from 'src/app/documents/document.model';
 })
 export class DocumentItemComponent implements OnInit{
   @Input() document: Document;
-
-  constructor(){ }
+  @Input() id:string;
 
   ngOnInit(){
 
