@@ -47,5 +47,9 @@ export class DocumentDetailComponent implements OnInit{
     }
 
   }
+  onCancel(){
+    //this.documentService.cancelDocument(this.document);
+    this.router.navigateByUrl('/documents');
+  }
 
 }

@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+//import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DndModule } from 'ng2-dnd';
+//import { Observable } from 'rxjs'
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +32,7 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
     ContactDetailComponent,
     ContactListComponent,
     ContactItemComponent,
+    ContactEditComponent,
     DocumentsComponent,
     DocumentListComponent,
     DocumentItemComponent,
@@ -38,13 +43,14 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
     MessageListComponent,
     DropdownDirective,
     DocumentEditComponent,
-    ContactEditComponent
   ],
   imports: [
     BrowserModule,
     RouterModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    DndModule.forRoot()     
   ],
   providers: [],
   bootstrap: [AppComponent]
