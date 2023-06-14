@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Contact } from '../contact.model';
 
 import { ContactService } from '../contact.service';
-import { ActivatedRoute, Params, Router} from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 //import { WindRefService } from 'src/app/wind-ref.service';
 
 

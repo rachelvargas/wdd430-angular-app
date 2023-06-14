@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 })
 export class ContactListComponent implements OnInit {
   contacts: Contact[] = [];
+  contactId: string='';
   private subscription: Subscription;
 
   constructor(private contactService: ContactService) {

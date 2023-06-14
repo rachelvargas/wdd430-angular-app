@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Contact } from './contact.model';
 import { MOCKCONTACTS } from './MOCKCONTACTS';
 
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,7 @@ export class ContactService {
   //currentId: number;
   maxContactId: number;
   id: string;
+  
 
   constructor() {
     this.contacts = MOCKCONTACTS;    
@@ -69,13 +70,13 @@ export class ContactService {
    }
 
    updateContact(originalContact: Contact, newContact: Contact){
-    /*if (originalDocument | newDocument === undefined | null){
+    /*if (!originalDocument){
       return;
     }*/
-    if (!originalContact){
+    if (!originalContact || !newContact){
       return;
     }
-    const pos = this.contacts.indexOf(originalContact);
+    const pos = this.contacts.findIndex(c => c.id === originalContact.id);
     if (pos < 0){
       return;
     }
@@ -83,24 +84,18 @@ export class ContactService {
     this.contacts[pos] = newContact;
     let contactListClone = this.contacts.slice();
     this.contactListChangedEvent.next(contactListClone);
-
-  }   
-
-   deleteContact(contact: Contact){
-    if(!contact){
-      return;
     }
-    const pos = this.contacts.indexOf(contact);
-    if (pos < 0){
-    return;
+    deleteContact(contact: Contact){
+      if(!contact) {
+        return;
+      }
+      const pos = this.contacts.indexOf(contact);
+      if (pos < 0){
+        return;
+      }
+      this.contacts.splice(pos, 1);
+      let contactListClone = this.contacts.slice()
+      //this.contactChangedEvent.emit(this.contacts.slice());
+      this.contactListChangedEvent.next(contactListClone);
+    }
   }
-  this.contacts.splice(pos, 1);
-  let contactListClone = this.contacts.slice()
-  //this.contactChangedEvent.emit(this.contacts.slice());
-  this.contactListChangedEvent.next(contactListClone);
-}
-   
-
-}
-  
-
