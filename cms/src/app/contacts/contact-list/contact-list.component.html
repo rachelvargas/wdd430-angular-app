@@ -1,41 +1,55 @@
-<div class="row contact-list" >    
-    <div class="panel panel-default contact-list">
-      <div class="col-xs-12 panel-heading">
-        <div class="col-xs-9">
-            <span class="heading"><strong>Contacts</strong></span>
-            </div>
-        <div class="col-xs-3">      
-              <a [routerLink]="['new']" class="btn btn-success pull-right">New Contact</a>           
-            </div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <span class="title pad-left-right">Contacts</span>
         </div>
 
-      <div class="panel-body">
         <div class="row">
-          <div class="col-xs-12 margin-top">
-            <cms-contact-item
-            *ngFor="let contactEl of contacts"
-            [contact]="contactEl"
-            dnd-draggable [dragEnabled]="true"
-            [dragData]="contactEl"
-            [dropZones]="['contactGroup']"> 
-            </cms-contact-item>
-                          
-              <!-- cdkDrag
-              /****
-              *****[dropzones]="['contactGroup']">
-                
-                dnd-draggable [dragEnabled]="true" 
-              [dragData]="contactEl"
-              [dropZones]="['contactGroup']">----
+          <div class="input-group pull-left pad-left-right col-xs-7">
 
-                <cms-contact-item
-              *ngFor="let contactEl of contacts"
-              [contact]="contactEl"
-              (click)="onSelected(contactEl)">
-              </cms-contact-item>-->
+            <!-- Add the search box input field here -->
+            <label for="searchBox"></label>
+            <input
+            class="form-control"
+            type="text"
+            id="searchBox"
+            name="searchBox"
+            #searchBox            
+            placeholder="Enter a search value"            
+            (keyup)="search(searchBox.value)"
+      
+            />
+            <!--[ngModel]="contact?.name"
+              [(ngModel)]="contacts"-->
+
+            <div class="glyphicon glyphicon-search input-group-addon" (click)="search(searchBox.value)">              
             </div>
+          </div>
+
+          <div class="pull-right pad-left-right">
+            <a class="btn btn-success" [routerLink]="['new']">New Contact</a>
+            </div></div></div>
+
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-xs-12 margin-top">
+                  <cms-contact-item
+                  *ngFor="let contactEl of contacts | contactsFilter: term"                   
+                  [contact]="contactEl"                                   
+                  dnd-draggable [dragEnabled]="true"
+                  [dragData]="contactEl"
+                  [dropZones]="['contactGroup']">
+                  </cms-contact-item>
+              
+                  <!--[ngClass]="search(contacts)"
+                  [ngClass]="search(searchBox.value)" 
+                  [ngClass]="getContac(contactEl)"-->
+
           </div>
         </div>
       </div>
-    </div>
-  
+    <!--</div>
+  </div>
+</div>-->
