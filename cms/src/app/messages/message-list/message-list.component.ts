@@ -4,6 +4,8 @@ import { Message } from '../message.model';
 
 import { MessageService } from '../message.service';
 
+import { Subscription, Observable} from 'rxjs'
+
 @Component({
   selector: 'cms-message-list',
   templateUrl: './message-list.component.html',
@@ -16,14 +18,14 @@ export class MessageListComponent implements OnInit {
 
   ngOnInit() {
     //this.messages = this.messageService.getMessages();
-    this.messageService.messageChangedEvent
+    this.messageService.messageListChangedEvent
     .subscribe(
       (messages: Message[]) => {
         this.messages = messages;
       }
     );
-
-    this.messages = this.messageService.getMessages();
+    
+    this.messageService.getMessages();
 
   }
 

@@ -7,7 +7,7 @@ import { ContactService } from '../contact.service';
 import { Subscription } from 'rxjs';
 //import { Observable } from 'rxjs';
 
-
+import { ContactsFilterPipe } from '../contacts-filter.pipe';
 
 @Component({
   selector: 'cms-contact-list',
@@ -18,9 +18,10 @@ export class ContactListComponent implements OnInit {
   contacts: Contact[] = [];
   contactId: string='';
   private subscription: Subscription;
+  term: string;
 
   constructor(private contactService: ContactService) {
-    this.contacts = this.contactService.getContacts();
+    // this.contacts = this.contactService.getContacts();
    }
 
   ngOnInit(){
@@ -30,6 +31,12 @@ export class ContactListComponent implements OnInit {
         this.contacts = contactList;
       }
     );
+
+    this.contactService.getContacts();
+  }
+
+  search(value: string){
+    this.term = value;
   }
 
   ngOnDestroy(): void {
