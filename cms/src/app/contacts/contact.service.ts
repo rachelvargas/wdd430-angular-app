@@ -39,13 +39,13 @@ export class ContactService {
     }
 
    getContact(id: string): Contact {
-    return this.contacts.find((contact) => contact.id === id);
-    /*for (let contact of this.contacts){
+    //return this.contacts.find((contact) => contact.id === id);
+    for (let contact of this.contacts){
       if(contact.id === id){
         return contact;
       }
     }    
-    return null;*/
+    return null;
      
    }
 
