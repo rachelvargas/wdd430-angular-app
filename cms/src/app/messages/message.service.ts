@@ -72,7 +72,7 @@ export class MessageService {
 
           this.maxMessagetId = this.getMaxId();
 
-          //sort the list of documents
+          //sort the list of messages
           this.messages.sort((a, b) => a.sender > b.sender ? 1 : b.sender > a.sender ? -1 : 0)
           //emit the next document list change event
           this.messageListChangedEvent.next(this.messages.slice())
