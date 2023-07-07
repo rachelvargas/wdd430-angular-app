@@ -1,6 +1,5 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Document } from './document.model';
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
 import { Subject, Observable } from 'rxjs';
 
@@ -10,17 +9,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DocumentService {
-  //documentSelectedEvent = new EventEmitter<Document>();
-  documentChangedEvent = new EventEmitter<Document[]>();
   documentListChangedEvent = new Subject<Document[]>();
   documents: Document[] = [];
-  //currentId: number;
   maxDocumentId: number;
   id:string;
 
   constructor(private httpClient: HttpClient) { 
-    //this.documents = MOCKDOCUMENTS;
-   // this.maxDocumentId = this.getMaxId();
+    
   }
           
   storeDocuments(){
@@ -49,11 +44,11 @@ export class DocumentService {
   }
   getDocuments(){
     this.httpClient
-    .get('https://enable-the-api-7e4e7-default-rtdb.firebaseio.com/documents.json')
+    .get<{message: string, documents: Document[]}>('http://localhost:3000/documents')
     .subscribe(
       //success method
-      (documents: Document[]) => {
-        this.documents = documents;
+      (documentData) => {
+        this.documents = documentData.documents;
 
         this.maxDocumentId = this.getMaxId();
         //sort the list of documents
@@ -82,47 +77,65 @@ export class DocumentService {
     return maxld;
    }
 
-   addDocument(newDocument: Document){
-    if(!newDocument){
+   sortAndSend(){
+    this.documents.sort((a, b) => a.name > b.name ? 1 : b.name > a.name ? -1 : 0);
+    this.documentListChangedEvent.next(this.documents.slice());
+   }
+   addDocument(document: Document){
+    if(!document){
       return;
     }
-    this.maxDocumentId++;
-    newDocument.id = this.maxDocumentId.toString();
-    this.documents.push(newDocument);
-    /*const documentListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentListClone);*/
-    this.storeDocuments();
 
+    document.id = '';
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+     this.httpClient.post<{ message: string, document: Document}>('http://localhost:3000/documents',
+     document, { headers: headers })
+     .subscribe(
+      (responseData) => {
+        this.documents.push(responseData.document);
+        this.sortAndSend();
+      }
+     );
    }
 
    updateDocument(originalDocument: Document, newDocument: Document){
-    if (!originalDocument){
+    if (!originalDocument || !newDocument){
       return;
     }
-    const pos = this.documents.indexOf(originalDocument);
+    const pos = this.documents.findIndex(d => d.id === originalDocument.id);
     if (pos < 0){
       return;
     }
     newDocument.id = originalDocument.id;
-    this.documents[pos] = newDocument;
-    /*const documentListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentListClone);*/
-    this.storeDocuments();
+    newDocument._id = originalDocument._id;
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    this.httpClient.put('http://localhost:3000/documents/' + originalDocument.id,
+    newDocument, { headers: headers })
+    .subscribe(
+      (response: Response) => {
+        this.documents[pos] = newDocument;
+        this.sortAndSend();
+      }
+    );    
 
   }   
   deleteDocument(document: Document){
     if(!document){
       return;
     }
-    const pos = this.documents.indexOf(document);
+    const pos = this.documents.findIndex(d => d.id === document.id);
     if (pos < 0){
     return;
   }
-  this.documents.splice(pos, 1);
-  var documentListClone = this.documents.slice();
-  //this.documentListChangedEvent.emit(this.documents.slice());
-  //this.documentListChangedEvent.next(documentListClone);
-  this.storeDocuments();
+  this.httpClient.delete('http://localhost:3000/documents/' + document.id)
+  .subscribe(
+    (response: Response) => {
+      this.documents.splice(pos, 1);
+      this.sortAndSend();
+    }
+  );
 }
-
 }

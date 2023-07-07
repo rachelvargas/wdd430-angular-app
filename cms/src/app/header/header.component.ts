@@ -3,7 +3,7 @@ import { Component} from '@angular/core';
 
 @Component({
   selector: 'cms-header',
-  templateUrl: './header.component.html', //C:\Users\angel\OneDrive\Desktop\WDD 430\Week06\wdd430-angular-app\cms\src\app\header\header.component.html
+  templateUrl: './header.component.html', 
   styleUrls: ['./header.component.css']
 })
 

@@ -5,6 +5,7 @@ import { Message } from '../message.model';
 import { MessageService } from '../message.service';
 
 import { Subscription, Observable} from 'rxjs'
+ 
 
 @Component({
   selector: 'cms-message-list',
@@ -12,7 +13,7 @@ import { Subscription, Observable} from 'rxjs'
   styleUrls: ['./message-list.component.css']
 })
 export class MessageListComponent implements OnInit {
-  messages: Message[];
+  messages: Message[] = [];
 
   constructor(private messageService: MessageService) { }
 

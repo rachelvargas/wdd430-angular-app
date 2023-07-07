@@ -24,7 +24,9 @@ export class DocumentEditComponent implements OnInit {
 
   }
   ngOnInit(){
-    this.route.params.subscribe(
+    this.route
+    .params
+    .subscribe(
       (params: Params) => {
         if (!this.id){
          this.editMode = false;
@@ -47,6 +49,7 @@ export class DocumentEditComponent implements OnInit {
 onSubmit(form: NgForm) {
   const value = form.value;
   const newDocument = new Document(
+    '',
     '',
     value.name,
     value.description,

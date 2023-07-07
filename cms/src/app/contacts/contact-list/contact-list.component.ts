@@ -14,18 +14,19 @@ import { ContactsFilterPipe } from '../contacts-filter.pipe';
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.css']
 })
-export class ContactListComponent implements OnInit {
+export class ContactListComponent implements OnInit, OnDestroy {
   contacts: Contact[] = [];
-  contactId: string='';
-  private subscription: Subscription;
+  //contactId: string='';
+  subscription: Subscription;
   term: string;
 
   constructor(private contactService: ContactService) {
-    // this.contacts = this.contactService.getContacts();
+    
    }
 
   ngOnInit(){
-    this.subscription = this.contactService.contactListChangedEvent.subscribe(
+    this.subscription = this.contactService.contactListChangedEvent
+    .subscribe(
       (contactList: Contact[]) => {
         //this.contactList = contacts;
         this.contacts = contactList;

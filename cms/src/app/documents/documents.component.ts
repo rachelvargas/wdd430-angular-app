@@ -11,14 +11,14 @@ import { DocumentService } from './document.service';
   providers: [DocumentService]
 })
 export class DocumentsComponent implements OnInit {
-  selectedDocument: Document;
+  selectedDocument: Document[] = [];
 
   constructor(private documentService: DocumentService) { }
 
   ngOnInit() {
-    this.documentService.documentChangedEvent
+    this.documentService.documentListChangedEvent
     .subscribe(
-      (document: Document) => {
+      (document: Document[]) => {
         this.selectedDocument = document;
       }
     );

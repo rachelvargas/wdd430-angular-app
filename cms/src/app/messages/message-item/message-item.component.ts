@@ -8,6 +8,7 @@ import { ContactService } from 'src/app/contacts/contact.service';
 @Component({
   selector: 'cms-message-item',
   templateUrl: './message-item.component.html',
+  providers: [ContactService],
   styleUrls: ['./message-item.component.css']
 })
 export class MessageItemComponent implements OnInit {
@@ -17,9 +18,9 @@ export class MessageItemComponent implements OnInit {
   constructor(private contactService: ContactService){ }
 
   ngOnInit(){
-    const contact: Contact = this.contactService.getContact(this.message.sender);
-    this.messageSender = contact?.name;
-    
+    this.contactService.getContact(this.message.sender.id)
+      .subscribe(contactData => {
+        this.messageSender = contactData.contact.name;
+      });    
   }
-
 }
