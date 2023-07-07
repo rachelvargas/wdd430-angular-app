@@ -15,7 +15,24 @@ const messageRoutes = require('./server/routes/messages');
 const contactRoutes = require('./server/routes/contacts');
 const documentRoutes = require('./server/routes/documents');
 
+const mongoose = require('mongoose');
+
 var app = express(); // create an instance of express
+
+mongoose
+/*.connect('http://mongodb://localhost:27017/cms',
+{ useNewUrlParser: true })
+.then(() => console.log("Connected to database!"))
+.catch((err) => console.log("Connection failed: " + err));*/
+.connect('mongodb://localhost:27017/cms',
+{ useNewUrlParser: true }, (err, res) => {
+  if(err){
+    console.log('Connection failed:' + err);
+  }
+  else {
+    console.log('Connected to database!');
+  }
+});
 
 // Tell express to use the following parsers for POST data
 app.use(bodyParser.json());

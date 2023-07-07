@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { ContactService } from '../contact.service';
 import { Contact } from '../contact.model';
 
+
  
 @Component({
   selector: 'cms-contact-edit',
@@ -34,9 +35,9 @@ export class ContactEditComponent implements OnInit{
           this.editMode = false;
           return;
         }
-        //this.contactService.getContact(this.id)
         
-        this.originalContact = this.contactService.getContact(this.id);
+        this.contactService.getContact(this.id);        
+        //this.originalContact = this.contactService.getContact(this.id);
         if(!this.originalContact){
           return;
         }
@@ -51,6 +52,7 @@ export class ContactEditComponent implements OnInit{
     onSubmit(form: NgForm) {
       const value = form.value;
       const newContact = new Contact(
+        '',
         '',
         value.name,
         value.email,

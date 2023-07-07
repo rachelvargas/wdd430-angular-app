@@ -9,6 +9,7 @@
             </div>
             <div class="pull-right btn-toolbar">
                 <a [routerLink]="['id']" class="btn btn-primary">Edit</a>
+                <!--<a [routerLink]="['/contacts']" class="btn btn-primary">Edit</a>-->
                 <a class="btn btn-danger" (click)="onDelete()">Delete</a>
             </div>
         </div>
@@ -18,6 +19,14 @@
             </div>
             <div class="list-group-item-heading">
                 Phone: {{ contact?.phone }}
+            </div>
+            <div *ngIf="contact.group && contact.group.length > 0">
+                <h2>Group Members:</h2>
+                <ul>
+                    <li *ngFor="let groupContact of contact.group">
+                        <p>{{ groupContact.name }}</p>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

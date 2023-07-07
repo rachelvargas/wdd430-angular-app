@@ -1,8 +1,7 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Message } from './message.model';
-import { MOCKMESSAGES } from './MOCKMESSAGES';
 
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -11,20 +10,38 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MessageService {
- // messageSelectedEvent = new EventEmitter<Message>();  
-  messageChangedEvent = new EventEmitter<Message[]>();
   messageListChangedEvent = new Subject<Message[]>();
   messages: Message[] = [];
   maxMessagetId: number;
+  id:string;
 
   constructor(private httpClient: HttpClient) {
-    //this.messages = MOCKMESSAGES;
+    
    }
 
-   addMessage(message: Message){
-    this.messages.push(message);
+   sortAndSend(){
+    this.messages.sort((a, b) => a.sender > b.sender ? 1 : b.sender > a.sender ? -1 : 0);
     this.messageListChangedEvent.next(this.messages.slice());
-    this.storesMessages();
+   }
+   addMessage(message: Message){
+    if(!document) {
+      return;
+    }
+
+    message.id = '';
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    this.httpClient
+    .post<{message: string, newMessage: Message}>('http://localhost:3000/messages',
+    message, { headers: headers })
+    .subscribe(
+      (responseData) => { 
+        message._id = responseData.newMessage._id;
+        message.id = responseData.newMessage.id;       
+        this.messages.push(message);
+        this.sortAndSend();
+      }
+    );    
     
    }
 
@@ -37,7 +54,7 @@ export class MessageService {
     .subscribe(
       (response:Response) => {
         this.messageListChangedEvent.next(this.messages.slice());
-        //this.sortAndSend();
+        this.sortAndSend();
       });
     }
     getMaxId(): number{
@@ -64,11 +81,11 @@ export class MessageService {
    }
    getMessages() {
     this.httpClient
-      .get('https://enable-the-api-7e4e7-default-rtdb.firebaseio.com/messages.json')
+      .get<{message: string, messages: Message[]}>('http://localhost:3000/messages')
       .subscribe(
         //success method
-        (messages: Message[]) => {
-          this.messages = messages;
+        (messageData) => {
+          this.messages = messageData.messages;
 
           this.maxMessagetId = this.getMaxId();
 

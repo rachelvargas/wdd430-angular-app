@@ -30,6 +30,7 @@ import { DocumentEditComponent } from './documents/document-edit/document-edit.c
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
 import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +49,8 @@ import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
     MessageEditComponent,
     MessageListComponent,
     DropdownDirective,
-    DocumentEditComponent    
+    DocumentEditComponent,
+        
   ],
   imports: [
     BrowserModule,
